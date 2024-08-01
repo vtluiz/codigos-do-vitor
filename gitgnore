@@ -1,0 +1,35 @@
+# Compiled Python files
+*.pyc
+__pycache__/
+
+# Virtual environment directories
+venv/
+env/
+
+# IDEs and editors
+.vscode/
+.idea/
+
+# System files
+.DS_Store
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs
+*.log
+
+# Python egg files
+*.egg
+*.egg-info/
+
+# Coverage reports
+.coverage
+*.cover
+
+# Mypy and Pyre type checker
+.mypy_cache/
+.pyre/
+
+# pylint
+.pylint.d/
