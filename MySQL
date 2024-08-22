@@ -1,0 +1,51 @@
+-- 1. criação de banco de dados: CREATE DATABASE
+CREATE DATABASE comandos_10;
+-- 2. seleção do banco de dados: USE DATABASE
+USE comandos_10;
+-- 3. criação de tabelas de banco de dados;
+CREATE TABLE vendas (
+ID_vendas INT,
+curso VARCHAR(100),
+aluno VARCHAR(100),
+estado VARCHAR(100),
+valor DECIMAL(10, 2)
+);
+-- 4. incluir dados na tabela: INSERT INTO
+INSERT INTO vendas( ID_vendas, curso, aluno, estado, valor)
+values
+(1, 'Excel', 'joão', 'sp', 100),
+(2, 'VBA', 'lucas', 'rj', 50),
+(3, 'Execel', 'alice', 'sp', 100),
+(4, 'Excel', 'pedro', 'pe', 100),
+(5, 'VBA', 'amanda', 'ba', 50), 
+(6, 'Power Bi', 'rita', 'rs', 80),
+(7, 'excel', 'julia', 'sc', 100), 
+(8, 'power bi', 'caio', 'sp', 80),
+(9, 'power bi', 'laura', 'mg', 80),
+(10, 'excel', 'rogério', 'ac', 100);
+-- 5. selecionar dados de uma tabela: SELECT
+SELECT * FROM vendas;
+SELECT aluno, curso, valor FROM vendas
+-- 6. ordenar dados da tabela: ORDER BY
+SELECT * FROM vendas
+ORDER BY aluno;
+-- 7. filtrar dados em uma tabela: WHERE
+SELECT * FROM vendas
+WHERE estado = 'rj';
+-- 8. alteração de valores dentro da tabela: UPDATE
+UPDATE vendas
+SET valores = 150
+WHERE curso = 'VBA';
+
+SELECT * FROM vendas;
+-- 9. exclusão de linhas na tabela: DELETE
+DELETE * FROM vendas
+WHERE ID_ vendas = 10;
+
+SELECT*FROM vendas;
+-- 10. exclusão de todos dados de uma tabela: TRUNCATE 
+TRUNCATE TABLE vendas;
+
+
+
+
