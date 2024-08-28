@@ -1,0 +1,11 @@
+# leitura das nota
+notas = []
+for i in range(3):
+    nota = float(input(f"digite a nota {i+1}: "))
+    notas.append(nota)
+
+#calculo da média
+media = sum(notas) / len(notas)
+
+# exibição da média
+print(f" a media das notas é: {media:.2f}")
