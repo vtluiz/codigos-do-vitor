@@ -1,0 +1,30 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from io import BytesIO
+import requests
+
+# Passo 1: Baixar o arquivo do Google Drive
+url = 'https://drive.google.com/uc?id=13SQ1N3PZtieiaVr37aK5rA8mcuQYMEHA&export=download'
+response = requests.get(url)
+file = BytesIO(response.content)
+
+# Passo 2: Carregar e explorar os dados
+df = pd.read_csv(file)
+print(df.head())
+
+# Passo 3: Limpar e formatar os dados
+df['Date'] = pd.to_datetime(df['Date'], format='%m/%d/%Y')
+df.set_index('Date', inplace=True)
+df.sort_index(inplace=True)
+
+# Passo 4: Visualizar os dados
+plt.figure(figsize=(10,6))
+plt.plot(df['Close'], label='Preço de Fechamento')
+plt.title('Preço de Fechamento das Ações do Walmart')
+plt.xlabel('Data')
+plt.ylabel('Preço de Fechamento')
+plt.legend()
+plt.show()
+
+# Proximos passos: Preparar os dados para um modelo de previsão, como ARIMA ou LSTM.
