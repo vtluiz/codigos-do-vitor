@@ -1,0 +1,82 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Carregar os dados
+url = 'https://drive.google.com/uc?id=1JE4-gKKgr7abGKgq3fQFz7lloK5x3Qi1&export=download'
+data = pd.read_csv(url, header=None, names=['id', 'category_name'])
+
+# Exibir as primeiras linhas do dataframe
+print(data.head())
+
+# Separar os dados em duas indústrias: Artesanato e Automotiva
+arts_and_crafts = [
+    'Beading & Jewelry Making', 'Fabric Decorating', 'Knitting & Crochet Supplies',
+    'Printmaking Supplies', 'Scrapbooking & Stamping Supplies', 'Sewing Products',
+    'Craft & Hobby Fabric', 'Needlework Supplies', 'Arts, Crafts & Sewing Storage',
+    'Painting, Drawing & Art Supplies', 'Craft Supplies & Materials', 'Gift Wrapping Supplies',
+    'Party Decorations'
+]
+
+automotive = [
+    'Automotive Paint & Paint Supplies', 'Heavy Duty & Commercial Vehicle Equipment',
+    'Automotive Tires & Wheels', 'Automotive Tools & Equipment',
+    'Automotive Performance Parts & Accessories', 'Car Care'
+]
+
+# Classificar os produtos
+data['industry'] = data['category_name'].apply(
+    lambda x: 'Artesanato' if x in arts_and_crafts else ('Automotiva' if x in automotive else 'Outros')
+)
+
+# Contar o número de categorias por indústria
+category_counts = data['industry'].value_counts()
+
+# Contar o número de produtos por categoria
+product_counts = data.groupby(['industry', 'category_name']).size().unstack(fill_value=0)
+
+# Plotar gráficos
+plt.figure(figsize=(14, 10))
+
+# Gráfico de Barras: Quantidade de categorias por indústria
+plt.subplot(2, 2, 1)
+category_counts.plot(kind='bar', color=['#ff9999','#66b3ff'])
+plt.title('Número de Categorias por Indústria')
+plt.xlabel('Indústria')
+plt.ylabel('Número de Categorias')
+
+# Gráfico de Pizza: Proporção de cada categoria dentro de cada indústria
+plt.subplot(2, 2, 2)
+data['industry'].value_counts().plot(kind='pie', autopct='%1.1f%%', colors=['#ff9999','#66b3ff'])
+plt.title('Proporção das Categorias por Indústria')
+plt.ylabel('')
+
+# Histograma: Distribuição de produtos nas diferentes categorias
+plt.subplot(2, 2, 3)
+for industry in data['industry'].unique():
+    subset = data[data['industry'] == industry]
+    subset['category_name'].value_counts().plot(kind='hist', alpha=0.5, label=industry)
+plt.title('Distribuição de Produtos por Categoria')
+plt.xlabel('Número de Produtos')
+plt.legend()
+
+plt.tight_layout()
+plt.show()
+
+# Relatório Final (esboço)
+def generate_report():
+    with open('relatorio_final.txt', 'w') as file:
+        file.write("Análise de Categorias de Produtos\n")
+        file.write("="*40 + "\n\n")
+        file.write("Descrição dos Dados e Metodologia de Análise\n")
+        file.write("Os dados foram carregados a partir do arquivo fornecido. Foram identificadas duas indústrias: Artesanato e Automotiva.\n")
+        file.write("A análise incluiu contagem de categorias e produtos, e a criação de visualizações para entender melhor a distribuição e tendências.\n\n")
+        file.write("Visualizações\n")
+        file.write("1. Gráfico de Barras: Mostra o número de categorias em cada indústria.\n")
+        file.write("2. Gráfico de Pizza: Apresenta a proporção de categorias por indústria.\n")
+        file.write("3. Histograma: Exibe a distribuição de produtos nas categorias.\n\n")
+        file.write("Recomendações\n")
+        file.write("Baseado na análise, recomenda-se aumentar a visibilidade das categorias com menor representação e revisar estratégias de marketing para melhorar a presença dos produtos.\n")
+        file.write("Além disso, considerar a análise de tendências ao longo do tempo pode fornecer insights adicionais para ajustes estratégicos.\n")
+
+generate_report()
